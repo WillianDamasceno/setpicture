@@ -1,0 +1,6 @@
+{
+    "indentSize": 2,
+    "wrapAttributes": "force-expand-multiline",
+    "noMultipleEmptyLines": true,
+    "sortTailwindcssClasses": true
+}
