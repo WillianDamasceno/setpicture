@@ -37,14 +37,14 @@
 
 <x-app-layout>
   <main class="flex h-screen flex-col items-center justify-center">
-    @if (isset($base64Image))
+    @if (session('base64Image'))
       <div class="flex max-w-2xl flex-col items-center pb-8">
         <img
-          src="{{ $base64Image }}"
+          src="{{ session('base64Image') }}"
           alt="Resized Image"
         >
         <a
-          href="{{ $base64Image }}"
+          href="{{ session('base64Image') }}"
           download="image.jpg"
           class="btn-primary btn"
         >
@@ -56,7 +56,7 @@
     <form
       id="file-form"
       method="post"
-      action="{{ route('file-upload') }}"
+      action="{{ route('resize') }}"
       enctype="multipart/form-data"
       class="max-w-2xl"
     >

@@ -20,7 +20,7 @@ use Intervention\Image\Facades\Image;
 
 Route::get('/', function () {
     return view('home');
-});
+})->name("home");
 
 Route::get('/dashboard', function () {
     return view('dashboard.index');
@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
         ->name('profile.destroy');
 });
 
-Route::post("/file-upload", function (Request $request) {
+Route::post("/resize", function (Request $request) {
     $validated = $request->validate([
         'file' => 'required|file|max:10240,mimes:jpeg,png,jpg',
         'width' => 'required|numeric',
@@ -56,9 +56,7 @@ Route::post("/file-upload", function (Request $request) {
 
     $base64Image = (string) $img->encode($encodeType)->encode('data-url');
 
-    return view("home", [
-        'base64Image' => $base64Image
-    ]);
-})->name("file-upload");
+    return redirect(route("home"))->with('base64Image', $base64Image);
+})->name("resize");
 
 require __DIR__ . '/auth.php';
