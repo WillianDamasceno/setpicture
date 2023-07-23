@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Requests\ResizeRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
@@ -35,18 +36,12 @@ Route::middleware('auth')->group(function () {
         ->name('profile.destroy');
 });
 
-Route::post("/resize", function (Request $request) {
-    $validated = $request->validate([
-        'file' => 'required|file|max:10240,mimes:jpeg,png,jpg',
-        'width' => 'required|numeric',
-        'height' => 'required|numeric',
-    ]);
+Route::post("/resize", function (ResizeRequest $request) {
+    $width = $request['width'];
+    $height = $request['height'];
 
-    $uploadedFile = $validated['file'];
-    $width = $validated['width'];
-    $height = $validated['height'];
+    $uploadedFile = $request['file'];
     $encodeType = $uploadedFile->getClientMimeType();
-
     $img = Image::make($uploadedFile);
 
     $img->resize($width, $height, function ($constraint) {
