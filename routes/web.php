@@ -1,7 +1,11 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
+use Intervention\Image\Facades\Image;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -30,5 +34,31 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
 });
+
+Route::post("/file-upload", function (Request $request) {
+    $validated = $request->validate([
+        'file' => 'required|file|max:10240,mimes:jpeg,png,jpg',
+        'width' => 'required|numeric',
+        'height' => 'required|numeric',
+    ]);
+
+    $uploadedFile = $validated['file'];
+    $width = $validated['width'];
+    $height = $validated['height'];
+    $encodeType = $uploadedFile->getClientMimeType();
+
+    $img = Image::make($uploadedFile);
+
+    $img->resize($width, $height, function ($constraint) {
+        $constraint->aspectRatio();
+        $constraint->upsize();
+    });
+
+    $base64Image = (string) $img->encode($encodeType)->encode('data-url');
+
+    return view("home", [
+        'base64Image' => $base64Image
+    ]);
+})->name("file-upload");
 
 require __DIR__ . '/auth.php';
