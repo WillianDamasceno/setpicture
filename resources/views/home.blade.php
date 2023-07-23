@@ -3,11 +3,11 @@
     function handleDrop(event) {
       event.preventDefault()
       const files = event.dataTransfer.files
-      handleFiles(files)
+      handleImages(files)
     }
 
-    function handleFiles(files) {
-      const fileInput = document.getElementById('file-input')
+    function handleImages(files) {
+      const fileInput = document.getElementById('image-input')
 
       fileInput.files = files
       console.log(fileInput)
@@ -19,7 +19,7 @@
 
     function setupDropArea() {
       const dropArea = document.getElementById('drop-area')
-      const fileInput = document.getElementById('file-input')
+      const fileInput = document.getElementById('image-input')
 
       dropArea.addEventListener('dragover', handleDragOver)
       dropArea.addEventListener('drop', handleDrop)
@@ -27,7 +27,7 @@
 
       fileInput.addEventListener('change', (event) => {
         const files = event.target.files
-        handleFiles(files)
+        handleImages(files)
       })
     }
 
@@ -58,7 +58,7 @@
       method="post"
       action="{{ route('resize') }}"
       enctype="multipart/form-data"
-      class="max-w-2xl"
+      class="max-w-2xl p-4"
     >
       @csrf
 
@@ -74,15 +74,16 @@
 
       <div
         id="drop-area"
-        class="cursor-pointer border-2 border-dashed border-gray-300 p-32 text-center"
+        class="flex aspect-video cursor-pointer items-center justify-center border-2 border-dashed border-gray-300 p-8 text-center"
       >
-        <p>Drag and drop a file here, or click to select a file.</p>
+        <p>Drag and drop an image here, or click to select one.</p>
         <input
           type="file"
-          id="file-input"
-          name="file"
+          id="image-input"
+          name="image"
           multiple
-          style="display: none;"
+          class="hidden"
+          accept=".jpg, .jpeg, .png, .gif"
         >
       </div>
 

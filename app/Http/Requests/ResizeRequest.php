@@ -22,7 +22,7 @@ class ResizeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file' => 'required|file|max:10240,mimes:jpeg,png,jpg',
+            'file' => 'required|file|max:10240|mimes:jpeg,png,jpg,webp',
             'width' => 'required|numeric',
             'height' => 'required|numeric',
         ];
