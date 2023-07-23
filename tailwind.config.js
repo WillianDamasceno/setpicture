@@ -7,7 +7,6 @@ export default {
     "./resources/views/**/*.blade.php",
   ],
   plugins: [
-    require("@tailwindcss/forms"),
     require("@tailwindcss/typography"),
     require("@tailwindcss/container-queries"),
     require("daisyui"),
@@ -18,5 +17,8 @@ export default {
         mono: "#2d3441",
       },
     },
+  },
+  daisyui: {
+    themes: false,
   },
 }

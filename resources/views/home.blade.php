@@ -6,32 +6,41 @@
       handleImages(files)
     }
 
-    function handleImages(files) {
-      const fileInput = document.getElementById('image-input')
-
+    function handleImages(files, fileInput) {
       fileInput.files = files
       console.log(fileInput)
     }
 
-    function handleDragOver(event) {
+    function handleDragEnter(event) {
       event.preventDefault()
+      const {
+        target
+      } = event
+
+      target.classList.add("bg-white/5")
     }
 
-    function setupDropArea() {
-      const dropArea = document.getElementById('drop-area')
-      const fileInput = document.getElementById('image-input')
+    function handleDragLeave(event) {
+      event.preventDefault()
+      const {
+        target
+      } = event
 
-      dropArea.addEventListener('dragover', handleDragOver)
-      dropArea.addEventListener('drop', handleDrop)
-      dropArea.addEventListener('click', () => fileInput.click())
-
-      fileInput.addEventListener('change', (event) => {
-        const files = event.target.files
-        handleImages(files)
-      })
+      target.classList.remove("bg-white/5")
     }
 
-    setupDropArea()
+    const dropArea = document.getElementById('drop-area')
+    const fileInput = document.getElementById('image-input')
+
+    fileInput.addEventListener('change', (event) => {
+      const files = event.target.files
+      handleImages(files, event.target)
+    })
+
+    dropArea.addEventListener('dragenter', handleDragEnter)
+    dropArea.addEventListener('dragleave', handleDragLeave)
+    dropArea.addEventListener('click', () => fileInput.click())
+    dropArea.addEventListener('drop', handleDrop)
   </script>
 @endpush
 
@@ -74,16 +83,19 @@
 
       <div
         id="drop-area"
-        class="flex aspect-video cursor-pointer items-center justify-center border-2 border-dashed border-gray-300 p-8 text-center"
+        tabindex="0"
+        class="flex aspect-video cursor-pointer items-center justify-center border-2 border-dashed border-gray-300 p-8 text-center hover:bg-white/5"
       >
-        <p>Drag and drop an image here, or click to select one.</p>
+        <p class="pointer-events-none">
+          Drag and drop an image here, or click to select one.
+        </p>
         <input
           type="file"
           id="image-input"
           name="image"
           multiple
           class="hidden"
-          accept=".jpg, .jpeg, .png, .gif"
+          accept=".jpg, .jpeg, .png, .webp"
         >
       </div>
 
