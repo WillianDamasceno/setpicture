@@ -4,7 +4,7 @@
     defer
   >
     const name = "{{ $name }}"
-    const dropArea = document.querySelector(`"drop-area-${name}"`)
+    const dropArea = document.querySelector(`#drop-area-${name}`)
     const fileInput = document.querySelector(`[name="${name}"]`)
     console.log(dropArea)
     console.log(fileInput)
@@ -21,13 +21,15 @@
     dropArea.addEventListener('dragover', (e) => e.preventDefault())
 
     // Handle hover effetc
+    const hoverClasses = "{{ $hover }}".split(" ")
+
     function handleDragEnter(event) {
       event.preventDefault()
       const {
         target
       } = event
 
-      target.classList.add("bg-white/5")
+        "{{ $hover }}" && target.classList.add(...hoverClasses)
     }
 
     function handleDragLeave(event) {
@@ -36,7 +38,7 @@
         target
       } = event
 
-      target.classList.remove("bg-white/5")
+        "{{ $hover }}" && target.classList.remove(...hoverClasses)
     }
 
     dropArea.addEventListener('dragenter', handleDragEnter)
@@ -77,18 +79,16 @@
 <div
   id="drop-area-{{ $name }}"
   tabindex="0"
-  class="relative flex aspect-video cursor-pointer items-center justify-center border-2 border-dashed border-gray-300 p-8 text-center hover:bg-white/5"
+  class="{{ $class }} cursor-pointer"
 >
-  <p class="pointer-events-none">
-    Drag and drop an image here, or click to select one.
-  </p>
+  <span class="pointer-events-none">
+    {{ $placeholder }}
+  </span>
 
   <input
     type="file"
-    id="image-input"
     name="{{ $name }}"
-    multiple
     class="hidden"
-    accept=".jpg, .jpeg, .png, .webp"
+    {{ $attributes }}
   >
 </div>

@@ -11,8 +11,12 @@ class DropZone extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $name)
-    {
+    public function __construct(
+        public string $name,
+        public string $class = "flex items-center justify-center rounded-lg border-2 border-dashed border-gray-300 p-4 hover:bg-white/5",
+        public string $hover = "bg-white/5",
+        public string $placeholder = "Drag and drop an image here, or click to select one.",
+    ) {
         //
     }
 
