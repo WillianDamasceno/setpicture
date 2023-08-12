@@ -36,21 +36,29 @@
 </head>
 
 <body class="font-sans antialiased">
-  <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+  <div class="min-h-screen bg-base-200">
+    <header class="sticky top-0 bg-base-100 shadow">
+      <div class="container mx-auto flex justify-between">
+        <img
+          src=""
+          alt=""
+        >
 
-    <!-- Page Heading -->
-    @if (isset($header))
-      <header class="bg-white shadow dark:bg-gray-800">
-        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-          {{ $header }}
-        </div>
-      </header>
-    @endif
+        <nav>
+          <ul class="flex gap-2 p-2">
+            <li>
+              <a
+                href="{{ route('gallery') }}"
+                class="block rounded px-4 py-2 transition-colors hover:bg-white/5"
+              >Gallery</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
 
     <!-- Page Content -->
-    <main>
-      {{ $slot }}
-    </main>
+    {{ $slot }}
   </div>
 </body>
 
