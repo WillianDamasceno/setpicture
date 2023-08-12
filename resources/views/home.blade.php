@@ -1,120 +1,59 @@
-@push('head')
-  <script {{ jsModule() }}>
-    function handleDrop(event) {
-      event.preventDefault()
-      const files = event.dataTransfer.files
-      handleImages(files)
-    }
-
-    function handleImages(files, fileInput) {
-      fileInput.files = files
-      console.log(fileInput)
-    }
-
-    function handleDragEnter(event) {
-      event.preventDefault()
-      const {
-        target
-      } = event
-
-      target.classList.add("bg-white/5")
-    }
-
-    function handleDragLeave(event) {
-      event.preventDefault()
-      const {
-        target
-      } = event
-
-      target.classList.remove("bg-white/5")
-    }
-
-    const dropArea = document.getElementById('drop-area')
-    const fileInput = document.getElementById('image-input')
-
-    fileInput.addEventListener('change', (event) => {
-      const files = event.target.files
-      handleImages(files, event.target)
-    })
-
-    dropArea.addEventListener('dragenter', handleDragEnter)
-    dropArea.addEventListener('dragleave', handleDragLeave)
-    dropArea.addEventListener('click', () => fileInput.click())
-    dropArea.addEventListener('drop', handleDrop)
-  </script>
-@endpush
-
 <x-app-layout>
   <main class="flex h-screen flex-col items-center justify-center">
-    @if (session('base64Image'))
-      <div class="flex max-w-2xl flex-col items-center pb-8">
-        <img
-          src="{{ session('base64Image') }}"
-          alt="Resized Image"
-        >
-        <a
-          href="{{ session('base64Image') }}"
-          download="image.jpg"
-          class="btn-primary btn"
-        >
-          Download
-        </a>
-      </div>
-    @endif
-
-    <form
-      id="file-form"
-      method="post"
-      action="{{ route('resize') }}"
-      enctype="multipart/form-data"
-      class="max-w-2xl p-4"
-    >
-      @csrf
-
-      @if ($errors->any())
-        <div class="mb-8 grid gap-1 rounded bg-red-400 p-4 font-semibold text-red-800">
-          @foreach ($errors->all() as $error)
-            <span class="">
-              {{ $error }}
-            </span>
-          @endforeach
+    <form>
+      @if (session('base64Image'))
+        <div class="flex max-w-2xl flex-col items-center pb-8">
+          <img
+            src="{{ session('base64Image') }}"
+            alt="Resized Image"
+          >
+          <a
+            href="{{ session('base64Image') }}"
+            download="image.jpg"
+            class="btn btn-primary"
+          >
+            Download
+          </a>
         </div>
       @endif
 
-      <div
-        id="drop-area"
-        tabindex="0"
-        class="flex aspect-video cursor-pointer items-center justify-center border-2 border-dashed border-gray-300 p-8 text-center hover:bg-white/5"
+      <form
+        id="file-form"
+        method="post"
+        action="{{ route('resize') }}"
+        enctype="multipart/form-data"
+        class="max-w-2xl p-4"
       >
-        <p class="pointer-events-none">
-          Drag and drop an image here, or click to select one.
-        </p>
-        <input
-          type="file"
-          id="image-input"
-          name="image"
-          multiple
-          class="hidden"
-          accept=".jpg, .jpeg, .png, .webp"
-        >
-      </div>
+        @csrf
 
-      <div class="grid grid-cols-2 gap-4 p-4">
-        <input
-          type="text"
-          placeholder="Width"
-          name="width"
-          class="input"
-        >
-        <input
-          type="text"
-          placeholder="Height"
-          name="height"
-          class="input"
-        >
-      </div>
+        @if ($errors->any())
+          <div class="mb-8 grid gap-1 rounded bg-red-400 p-4 font-semibold text-red-800">
+            @foreach ($errors->all() as $error)
+              <span class="">
+                {{ $error }}
+              </span>
+            @endforeach
+          </div>
+        @endif
 
-      <button class="btn-primary btn mx-auto mt-4 block">Resize Image</button>
+        <x-form.drop-zone name="images" />
+
+        <div class="grid grid-cols-2 gap-4 p-4">
+          <input
+            type="text"
+            placeholder="Width"
+            name="width"
+            class="input"
+          >
+          <input
+            type="text"
+            placeholder="Height"
+            name="height"
+            class="input"
+          >
+        </div>
+
+        <button class="btn btn-primary mx-auto mt-4 block">Resize Image</button>
+      </form>
   </main>
-  </form>
 </x-app-layout>
