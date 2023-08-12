@@ -36,6 +36,12 @@ Route::middleware('auth')->group(function () {
         ->name('profile.destroy');
 });
 
+require __DIR__ . '/auth.php';
+
+Route::get("/gallery", function () {
+    return view("gallery");
+})->name("gallery");
+
 Route::post("/resize", function (ResizeRequest $request) {
     $width = $request['width'];
     $height = $request['height'];
@@ -53,5 +59,3 @@ Route::post("/resize", function (ResizeRequest $request) {
 
     return redirect(route("home"))->with('base64Image', $base64Image);
 })->name("resize");
-
-require __DIR__ . '/auth.php';
