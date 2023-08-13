@@ -36,8 +36,8 @@ export default {
       {
         dark: {
           ...require('daisyui/src/theming/themes')['[data-theme=dark]'],
-          'primary': 'hsl(0 100% 36%)',
-          '--primary': '0 100% 36%',
+          'primary': 'hsl(0 100% 40%)',
+          '--primary': '0 100% 40%',
         },
       },
     ],
