@@ -1,5 +1,14 @@
 /** @type {import('tailwindcss').Config} */
 
+function withOpacityValue(variable) {
+  return ({ opacityValue }) => {
+    if (opacityValue === undefined) {
+      return `hsl(var(${variable}))`
+    }
+    return `hsl(var(${variable}) / ${opacityValue})`
+  }
+}
+
 export default {
   content: [
     "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
@@ -14,6 +23,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        primary: withOpacityValue('--primary'),
         mono: "#2d3441",
       },
       fontFamily: {
@@ -22,6 +32,14 @@ export default {
     },
   },
   daisyui: {
-    themes: false,
+    themes: [
+      {
+        dark: {
+          ...require('daisyui/src/theming/themes')['[data-theme=dark]'],
+          'primary': 'hsl(0 100% 36%)',
+          '--primary': '0 100% 36%',
+        },
+      },
+    ],
   },
 }
