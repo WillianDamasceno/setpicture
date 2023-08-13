@@ -35,6 +35,7 @@
         </div>
       @endif
 
+      <span class="hidden border-dashed border-2"></span>
       <x-form.drop-zone
         name="images"
         multiple
