@@ -48,6 +48,24 @@
           <ul class="flex gap-2 p-2">
             <li>
               <a
+                href="{{ route('home') }}"
+                class="block rounded px-4 py-2 transition-colors hover:bg-white/5"
+              >Resize</a>
+            </li>
+            <li>
+              <a
+                href="{{ route('home') }}"
+                class="block rounded px-4 py-2 transition-colors hover:bg-white/5"
+              >Crop</a>
+            </li>
+            <li>
+              <a
+                href="{{ route('home') }}"
+                class="block rounded px-4 py-2 transition-colors hover:bg-white/5"
+              >Compress</a>
+            </li>
+            <li>
+              <a
                 href="{{ route('gallery') }}"
                 class="block rounded px-4 py-2 transition-colors hover:bg-white/5"
               >Gallery</a>
