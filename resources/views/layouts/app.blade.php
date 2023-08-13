@@ -33,11 +33,24 @@
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 
   @stack('head')
+
+  <script>
+    // TODO: Create a component for the header and move the header and this script to there
+
+    window.addEventListener("scroll", () => {
+      const header = document.querySelector("[data-site-header]")
+      if (scrollY > 60) {
+        header.setAttribute("data-compressed", "")
+      } else {
+        header.removeAttribute("data-compressed")
+      }
+    })
+  </script>
 </head>
 
 <body class="font-sans antialiased">
   <div class="min-h-screen bg-base-200">
-    <header class="sticky top-0 bg-base-100 shadow">
+    <header data-site-header>
       <div class="container mx-auto flex justify-between">
         <img
           src=""
@@ -49,25 +62,25 @@
             <li>
               <a
                 href="{{ route('home') }}"
-                class="block rounded px-4 py-2 transition-colors hover:bg-white/5"
+                class="btn btn-ghost py-3 min-h-fit h-auto"
               >Resize</a>
             </li>
             <li>
               <a
                 href="{{ route('home') }}"
-                class="block rounded px-4 py-2 transition-colors hover:bg-white/5"
+                class="btn btn-ghost py-3 min-h-fit h-auto"
               >Crop</a>
             </li>
             <li>
               <a
                 href="{{ route('home') }}"
-                class="block rounded px-4 py-2 transition-colors hover:bg-white/5"
+                class="btn btn-ghost py-3 min-h-fit h-auto"
               >Compress</a>
             </li>
             <li>
               <a
                 href="{{ route('gallery') }}"
-                class="block rounded px-4 py-2 transition-colors hover:bg-white/5"
+                class="btn btn-ghost py-3 min-h-fit h-auto"
               >Gallery</a>
             </li>
           </ul>
