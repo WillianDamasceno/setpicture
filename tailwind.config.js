@@ -16,6 +16,9 @@ export default {
       colors: {
         mono: "#2d3441",
       },
+      fontFamily: {
+        montserrat: ["Montserrat", "system-ui", "Arial"]
+      }
     },
   },
   daisyui: {
