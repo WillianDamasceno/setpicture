@@ -42,6 +42,8 @@ Route::get("/gallery", function () {
     return view("gallery");
 })->name("gallery");
 
+Route::view("/upload", "upload");
+
 Route::post("/resize", function (ResizeRequest $request) {
     $width = $request['width'];
     $height = $request['height'];
